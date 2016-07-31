@@ -1,37 +1,23 @@
+import "babel-polyfill";
+
 import test from 'ava';
 
-import w3cManifest from '../dist/index.js';
-
-function runAsync(manifest){
-  return new Promise((resolve, reject) => {
-    try{
-      w3cManifest.call({
-        query: '',
-        options: {},
-        cacheable: () => true,
-        async: () => (err, result) => err ? reject(err) : resolve(JSON.parse(result))
-      }, JSON.stringify(manifest, null, '  '));
-    }catch(e){
-      reject(e);
-    }
-  });
-}
+import parseIcons from '../dist/parseIcons.js';
 
 test('empty manifest', async (t) => {
-  const result = await runAsync({});
+  const result = await parseIcons({});
   t.deepEqual(result, {icons:[]});
 });
 
-
 test('no icons found', async (t) => {
-  const result = await runAsync({
+  const result = await parseIcons({
     icons: 'path/does/not/exist/*.png'
   });
   t.deepEqual(result, {icons:[]});
 });
 
 test('single file', async (t) => {
-  const result = await runAsync({
+  const result = await parseIcons({
     icons: 'samples/cc.png'
   });
   t.deepEqual(result, {
@@ -46,7 +32,7 @@ test('single file', async (t) => {
 });
 
 test('multiple files', async (t) => {
-  const result = await runAsync({
+  const result = await parseIcons({
     icons: 'samples/*.png'
   });
   t.deepEqual(result, {
