@@ -1,0 +1,28 @@
+{
+  "name": "w3c-manifest-loader",
+  "version": "1.0.0",
+  "description": "W3C-manifest loader for webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariusGundersen/w3c-manifest-loader.git"
+  },
+  "keywords": [
+    "w3c-manifest",
+    "manifest.json",
+    "webpack",
+    "loader"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mariusGundersen/w3c-manifest-loader/issues"
+  },
+  "homepage": "https://github.com/mariusGundersen/w3c-manifest-loader#readme",
+  "dependencies": {
+    "loader-utils": "^0.2.15"
+  }
+}
