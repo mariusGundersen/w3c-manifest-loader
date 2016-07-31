@@ -17,11 +17,10 @@ export default async function w3cManifest(source){
     const icons = getIconsArray(manifest);
 
     const listOfGlobResults = await Promise.all(icons.map(icon => globAsPromised(icon, {})));
-    const listOfIcons = await Promise.all(listOfGlobResults.map(probeSizeAsPromised));
+    const listOfPaths = listOfGlobResults.reduce((a, b) => ([...a, ...b]), []);
+    const listOfIcons = await Promise.all(listOfPaths.map(probeSizeAsPromised));
 
-    const iconData = lists.reduce((a, b) => ([...a, ...b]), []);
-
-    manifest.icons = iconData.map(({path, width, height, mime}) => ({
+    manifest.icons = listOfIcons.map(({path, width, height, mime}) => ({
       src: path,
       size: `${width}x${height}`,
       type: mime
@@ -43,11 +42,11 @@ function getIconsArray(manifest){
 function globAsPromised(pattern, options){
   return new Promise((resolve, reject) =>
     glob(pattern, options,
-      (err, files) => err ? reject(err) : resolve(filse)));
+      (err, files) => err ? reject(err) : resolve(files)));
 }
 
 function probeSizeAsPromised(path){
-  const input = createReadStream(icon);
+  const input = createReadStream(path);
   return new Promise(function(resolve, reject){
     probeSize(path, (err, result) => {
       input.destroy();
