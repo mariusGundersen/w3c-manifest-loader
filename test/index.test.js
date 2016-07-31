@@ -20,5 +20,5 @@ function runAsync(manifest){
 
 test('simple process', async (t) => {
   const result = await runAsync({});
-  t.deepEqual(result, {icons: []});
+  t.deepEqual(result, {});
 })

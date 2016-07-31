@@ -20,7 +20,7 @@ export default async function process(manifest, context, config){
       link.setAttribute('href', ${publicPath});
       document.head.appendChild(link);
     })();
-    ${manifest.icons.map(legacyAppleIcon).join('')}`;
+    ${(manifest.icons || []).map(legacyAppleIcon).join('')}`;
 }
 
 function legacyAppleIcon(icon){
