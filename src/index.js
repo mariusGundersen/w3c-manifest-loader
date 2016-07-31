@@ -3,7 +3,7 @@ import "babel-polyfill";
 import {createReadStream} from 'fs';
 import glob from 'glob';
 import {getLoaderConfig} from 'loader-utils';
-import path from 'path';
+import {join} from 'path';
 import probeSize from 'probe-image-size';
 
 export default async function w3cManifest(source){
@@ -18,10 +18,15 @@ export default async function w3cManifest(source){
 
     const listOfGlobResults = await Promise.all(icons.map(icon => globAsPromised(icon, {})));
     const listOfPaths = listOfGlobResults.reduce((a, b) => ([...a, ...b]), []);
-    const listOfIcons = await Promise.all(listOfPaths.map(probeSizeAsPromised));
+    const listOfIcons = await Promise.all(listOfPaths
+    .map(path => ({
+      name: path,
+      path: join(process.cwd(), path)
+    }))
+    .map(probeSizeAsPromised));
 
-    manifest.icons = listOfIcons.map(({path, width, height, mime}) => ({
-      src: path,
+    manifest.icons = listOfIcons.map(({name, width, height, mime}) => ({
+      src: join("__webpack_public_path__", name),
       size: `${width}x${height}`,
       type: mime
     }));
@@ -45,13 +50,13 @@ function globAsPromised(pattern, options){
       (err, files) => err ? reject(err) : resolve(files)));
 }
 
-function probeSizeAsPromised(path){
-  const input = createReadStream(path);
+function probeSizeAsPromised(icon){
+  const input = createReadStream(icon.path);
   return new Promise(function(resolve, reject){
-    probeSize(path, (err, result) => {
+    probeSize(input, (err, result) => {
       input.destroy();
 
-      return err ? reject(err) : resolve({path:path, ...result});
+      return err ? reject(err) : resolve({...icon, ...result});
     });
   });
 }
