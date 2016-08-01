@@ -33,7 +33,7 @@ And configure the loader for `manifest.json` files in your webpack config file:
     loaders: [
       {
         test: /manifest\.json$/,
-        loader: 'w3c-manifest?name=[name].[hash].[ext]&legacyAppleSupport=true'
+        loader: 'w3c-manifest?name=[name].[hash].[ext]&icon=icons/[name].[hash].[ext]&legacyAppleSupport=true'
       }
     ]
   }
@@ -44,7 +44,8 @@ And configure the loader for `manifest.json` files in your webpack config file:
 
 These are common options you can specify in the `require` or `loaders` config.
 
-* `name` - Name of the output, defaults to `[hash].[ext]`. See [file-loader](https://github.com/webpack/file-loader) for more info.
+* `name` - Name of the manifest.json output, defaults to `[hash].[ext]`. See [file-loader](https://github.com/webpack/file-loader) for more info.
+* `icon` - Name of the icons output, defaults to `[hash].[ext]`. See [file-loader](https://github.com/webpack/file-loader) for more info.
 * `legacyAppleSupport` Use the [legacy proprietary Apple elements](https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html) for WebApps.
 
 ## License

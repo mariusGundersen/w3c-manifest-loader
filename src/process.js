@@ -1,8 +1,21 @@
 import {interpolateName} from 'loader-utils';
-import {join} from 'path';
+import {resolve, dirname} from 'path';
 import u from 'untab';
+import fs from 'fs-promise';
 
 export default async function process(manifest, context, config){
+  await Promise.all(manifest.icons.map(async (icon) => {
+    const filePath = resolve(dirname(context.resourcePath), icon.src);
+    const content = await fs.readFile(filePath);
+    const url = interpolateName({resourcePath: filePath}, config.icon, {
+      context: config.context || context.options.context,
+      content: content,
+      regExp: config.regExp
+    });
+    context.emitFile(url, content);
+    icon.src = context.options.output.publicPath + url;
+  }));
+
   const content = JSON.stringify(manifest, null, '  ');
   const url = interpolateName(context, config.name, {
       context: config.context || context.options.context,
