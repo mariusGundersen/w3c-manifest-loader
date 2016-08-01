@@ -1,6 +1,6 @@
 {
   "name": "w3c-manifest-loader",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "W3C-manifest loader for webpack",
   "main": "dist/index.js",
   "scripts": {
