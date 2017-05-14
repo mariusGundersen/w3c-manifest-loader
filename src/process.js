@@ -48,13 +48,13 @@ function legacyAppleManifest(manifest){
     }
     if(manifest.display && (manifest.display == 'fullscreen' || manifest.display == 'standalone')){
       var meta = document.createElement('meta');
-      meta.setAttribute('rel', 'apple-mobile-web-app-capable');
+      meta.setAttribute('name', 'apple-mobile-web-app-capable');
       meta.setAttribute('content', 'yes');
       document.head.appendChild(meta);
     }
     if(manifest.theme_color){
       var meta = document.createElement('meta');
-      meta.setAttribute('rel', 'apple-mobile-web-app-status-bar-style');
+      meta.setAttribute('name', 'apple-mobile-web-app-status-bar-style');
       meta.setAttribute('content', manifest.theme_color);
       document.head.appendChild(meta);
     }
