@@ -1,6 +1,6 @@
 import "babel-polyfill";
 
-import {getLoaderConfig} from 'loader-utils';
+import { getOptions } from 'loader-utils';
 
 import process from './process.js';
 
@@ -9,7 +9,7 @@ export default async function w3cManifest(source){
   const callback = this.async();
 
   try{
-    const config = getLoaderConfig(this, 'w3c-manifest');
+    const config = getOptions(this);
 
     const manifest = JSON.parse(source);
 
