@@ -8,7 +8,6 @@ export default async function process(manifest, context, config){
     const filePath = resolve(dirname(context.resourcePath), icon.src);
     const content = await fs.readFile(filePath);
     const url = interpolateName({resourcePath: filePath}, config.icon, {
-      context: config.context || context.options.context,
       content: content,
       regExp: config.regExp
     });
@@ -18,7 +17,6 @@ export default async function process(manifest, context, config){
 
   const content = JSON.stringify(manifest, null, '  ');
   const url = interpolateName(context, config.name, {
-      context: config.context || context.options.context,
       content: content,
       regExp: config.regExp
     });
